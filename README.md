@@ -25,29 +25,14 @@ dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer --version 5.0.1
  ```
  Repositories/UserRepository.cs
  ```
+
  Representará um banco de dados com usuários e suas roles
+ 
 ```
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ApiAuth.Models;
-
-namespace ApiAuth.Repositories
-{
-	public static class UserRepository
-	{
-		public static User Get(string username, string password)
-		{
-
-			var users = new List<User>();
-			users.Add(new User { Id = 1, Username = "Lucas", Password = "123", Role = "manager" });
-			users.Add(new User { Id = 2, Username = "Martins", Password = "321", Role = "employee" });
-			return users.Where(x => x.Username.ToLower() == username.ToLower() && x.Password == x.Password).FirstOrDefault();
-
-		}
-	}
-}
+var users = new List<User>();
+users.Add(new User { Id = 1, Username = "Lucas", Password = "123", Role = "manager" });
+users.Add(new User { Id = 2, Username = "Martins", Password = "321", Role = "employee" });
+return users.Where(x => x.Username.ToLower() == username.ToLower() && x.Password == x.Password).FirstOrDefault();
 
 ```
 
@@ -59,18 +44,12 @@ Settings.cs
 Contém um chave privada para criação de tokens onde o servidor utiliza para descriptografar uma parte dos tokens recebidos 
 
 ```
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ApiAuth
+public static class Settings
 {
-	public static class Settings
-	{
-		public static string Secret = "fedaf7d8863b48e197b9287d492b708e";
-	}
+	public static string Secret = "fedaf7d8863b48e197b9287d492b708e";
 }
+
 ```
 
 ## Criação do Service
@@ -82,18 +61,9 @@ Services/TokenService.cs
 Este service será responsável para criação de tokens, gerando um token JWT utilziando ASP.NET 5
 
 ```
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using ApiAuth.Models;
-using Microsoft.IdentityModel.Tokens;
-
-namespace ApiAuth.Services
-{
-	public class TokenService
+public class TokenService
 	{
-		public static string GenerateToken(User user)
+	public static string GenerateToken(User user)
 		{
 			var tokenHandler = new JwtSecurityTokenHandler();
 			var key = Encoding.ASCII.GetBytes(Settings.Secret);
@@ -116,52 +86,27 @@ namespace ApiAuth.Services
 
 ## Adicionando autenticação e autorização
 
+
 ```
 Startup.cs
 ```
 
-Informando a aplicação que iremos trabalhar com autenticação e autorização e definindo quais perfis tem acesso a determinadas ações de controladores
 
 ### Informando a aplicação que utilizaremos autenticação
 
+Informando a aplicação que iremos trabalhar com autenticação e autorização 
+```
+app.UseAuthentication();
+```
 <img src="https://cdn.discordapp.com/attachments/1046824853015113789/1202803916786634792/image.png?ex=65cec970&is=65bc5470&hm=d14f7d6a28a16931acc089dfa31f624bcf40f5be496c2aa755421c5a53af18be&" alt="">
 
 
 ### Configurando autenticação
 
-<img src="https://cdn.discordapp.com/attachments/1046824853015113789/1202803944452263987/image.png?ex=65cec977&is=65bc5477&hm=7b9317657596061b3861458680f6624548b55d77f1de69dc4b1001b986eedc1e&" alt="">
-
-
+Definindo quais perfis tem acesso a determinadas ações de controladores
 ```
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
 
-
-
-namespace ApiAuth
-{
-	public class Startup
-	{
-		public Startup(IConfiguration configuration)
-		{
-			Configuration = configuration;
-		}
-
-		public IConfiguration Configuration { get; }
-
-		// This method gets called by the runtime. Use this method to add services to the container.
-		public void ConfigureServices(IServiceCollection services)
-		{
-			services.AddControllersWithViews();
-
-
-			var key = Encoding.ASCII.GetBytes(Settings.Secret);
+var key = Encoding.ASCII.GetBytes(Settings.Secret);
 
 			services.AddAuthentication(x =>
 			{
@@ -179,64 +124,21 @@ namespace ApiAuth
 					ValidateAudience = false
 				};
 			});
-		}
-
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-		{
-			if (env.IsDevelopment())
-			{
-				app.UseDeveloperExceptionPage();
-			}
-			else
-			{
-				app.UseExceptionHandler("/Home/Error");
-				// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-				app.UseHsts();
-			}
-			app.UseHttpsRedirection();
-			app.UseStaticFiles();
-
-			app.UseRouting();
-
-			app.UseAuthentication();
-
-			app.UseAuthorization();
-
-			app.UseEndpoints(endpoints =>
-			{
-				endpoints.MapControllerRoute(
-					name: "default",
-					pattern: "{controller=Home}/{action=Index}/{id?}");
-			});
-		}
-	}
-}
 
 ```
+
+<img src="https://cdn.discordapp.com/attachments/1046824853015113789/1202803944452263987/image.png?ex=65cec977&is=65bc5477&hm=7b9317657596061b3861458680f6624548b55d77f1de69dc4b1001b986eedc1e&" alt="">
 
 ## Autenticando
-
 ```
     Controller/LoginController.cs
+
 ```
+
 Explorando toda autenticação e autorização no Controller
 
 ```
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using ApiAuth.Models;
-using ApiAuth.Repositories;
-using ApiAuth.Services;
-using System.Net;
-
-namespace ApiAuth.Controllers
-{
-
-	[ApiController]
+[ApiController]
 	[Route(template: "v1")]
 	public class LoginController
 	{
@@ -267,25 +169,18 @@ namespace ApiAuth.Controllers
 
 
 	}
-
-}
-
 ```
 
 ## Controlador de Rotas
 
 ```
-    Controller/HomeController.cs
+Controller/HomeController.cs
+
 ```
 
 Criação de 4 métodos explorando as autorizações e rotas
 
 ```
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System;
-
-
 namespace ApiAuth.Controllers
 {
 	[ApiController]
