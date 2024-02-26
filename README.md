@@ -11,6 +11,9 @@
 
 ## Adicionando pacotes ao projeto
 
+<details>
+  <summary>Clique para mostrar conteúdo</summary>
+  
 Para instalação de pacotes com versões antigas utilize dotnet no Windows powershell
 
 ```
@@ -20,8 +23,15 @@ dotnet add package Microsoft.AspNetCore.Authentication --version 2.2.0
 dotnet add package Microsoft.AspNetCore.Authentication.JwtBearer --version 5.0.12
 ```
 
+
+</details>
+
+
 ## Criação de repositório
 
+<details>
+  <summary>Clique para mostrar conteúdo</summary>
+  
  ```
  Repositories/UserRepository.cs
  ```
@@ -36,8 +46,14 @@ return users.Where(x => x.Username.ToLower() == username.ToLower() && x.Password
 
 ```
 
-## Criação Chave privada
+</details>
 
+
+
+## Criação chave privada
+<details>
+  <summary>Clique para mostrar conteúdo</summary>
+  
 ```
 Settings.cs
 ```
@@ -52,8 +68,16 @@ public static class Settings
 
 ```
 
+</details>
+
+
+
+
 ## Criação do Service
 
+<details>
+  <summary>Clique para mostrar conteúdo</summary>
+  
 ```
 Services/TokenService.cs
 ```
@@ -84,23 +108,17 @@ public class TokenService
 }
 ```
 
+</details>
+
+
+
+
 ## Adicionando autenticação e autorização
 
 
-```
-Startup.cs
-```
-
-
-### Informando a aplicação que utilizaremos autenticação
-
-Informando a aplicação que iremos trabalhar com autenticação e autorização 
-```
-app.UseAuthentication();
-```
-<img src="https://cdn.discordapp.com/attachments/1046824853015113789/1202803916786634792/image.png?ex=65cec970&is=65bc5470&hm=d14f7d6a28a16931acc089dfa31f624bcf40f5be496c2aa755421c5a53af18be&" alt="">
-
-
+<details>
+  <summary>Clique para mostrar conteúdo</summary>
+  
 ### Configurando autenticação
 
 Definindo quais perfis tem acesso a determinadas ações de controladores
@@ -127,9 +145,27 @@ var key = Encoding.ASCII.GetBytes(Settings.Secret);
 
 ```
 
-<img src="https://cdn.discordapp.com/attachments/1046824853015113789/1202803944452263987/image.png?ex=65cec977&is=65bc5477&hm=7b9317657596061b3861458680f6624548b55d77f1de69dc4b1001b986eedc1e&" alt="">
+
+
+
+<div align="center">
+<img src="https://github.com/lucasmargui/ASP_Autenticacao_Estrutura/assets/157809964/f3ad1ea9-b763-474b-918f-ddbb2241535a" style="width:45%">	
+<img src="https://github.com/lucasmargui/ASP_Autenticacao_Estrutura/assets/157809964/4c403ed5-c1e9-4acf-87b0-842f090b15a0" style="width:45%">
+</div>
+
+
+
+</details>
+
+
+
+
 
 ## Autenticando
+
+<details>
+  <summary>Clique para mostrar conteúdo</summary>
+  
 ```
     Controller/LoginController.cs
 
@@ -171,8 +207,17 @@ Explorando toda autenticação e autorização no Controller
 	}
 ```
 
+</details>
+
+
+
+
+
 ## Controlador de Rotas
 
+<details>
+  <summary>Clique para mostrar conteúdo</summary>
+  
 ```
 Controller/HomeController.cs
 
@@ -210,34 +255,79 @@ namespace ApiAuth.Controllers
 
 ```
 
+</details>
+
+
+
 ## Tipos de acesso
 
 ### Anônimo
 
-<img src="https://cdn.discordapp.com/attachments/1046824853015113789/1202805751026810921/image.png?ex=65cecb26&is=65bc5626&hm=694dc1d16ffa7feaad9cd30f909992256bdea54b4e5e89f3b63b3706f0019085&" alt="">
+
+<div align="center">
+	<h3> </h3>
+<img src="https://github.com/lucasmargui/ASP_Autenticacao_Estrutura/assets/157809964/f446f9e6-7059-4b14-af75-e964645f6e3a" style="width:100%">
+</div>
+
+
+
+
 
 ### Não autenticado 
 
-<img src="https://cdn.discordapp.com/attachments/1046824853015113789/1202805800377262080/image.png?ex=65cecb31&is=65bc5631&hm=80ca9649b04a0fe48aa3afed5efdd1f92b29101735817ab871a6de27c77c13c9&" alt="">
+
+<div align="center">
+	<h3> </h3>
+<img src="https://github.com/lucasmargui/ASP_Autenticacao_Estrutura/assets/157809964/bb9c0a34-0c7b-485c-a26e-b40dfeb62ebc" style="width:100%">
+</div>
+
 
 ### Autenticação
 
-<img src="https://cdn.discordapp.com/attachments/1046824853015113789/1202805845063241738/image.png?ex=65cecb3c&is=65bc563c&hm=27daf47232d38b973b43b5c91ef16fd0b16e8a1f0a5bc369b6cefd0d2af1d89e&" alt="">
+
+
+
+
+<div align="center">
+	<h3> </h3>
+<img src="https://github.com/lucasmargui/ASP_Autenticacao_Estrutura/assets/157809964/ef5c76b1-0c7b-4622-a306-e5d58efd67bf" style="width:100%">
+</div>
+
+
 
 ### Autenticado
 
-<img src="https://cdn.discordapp.com/attachments/1046824853015113789/1202805871533625374/image.png?ex=65cecb42&is=65bc5642&hm=ff5ad08e07e8a6bb8a686628cac30fc04249294a25b3f0d6182c087f18639781&" alt="">
+
+<div align="center">
+	<h3> </h3>
+<img src="https://github.com/lucasmargui/ASP_Autenticacao_Estrutura/assets/157809964/b951b882-d68f-433f-a39c-3b682b0ce6c1" style="width:100%">
+</div>
+
+
 
 ### Autenticado porém sem acesso a Employee
 
-<img src="https://cdn.discordapp.com/attachments/1046824853015113789/1202805897827590155/image.png?ex=65cecb49&is=65bc5649&hm=f15c909e86254abd206b7832f668490fb3d3b89f0077d2fe3598119cdad86272&" alt="">
+
+<div align="center">
+	<h3> </h3>
+<img src="https://github.com/lucasmargui/ASP_Autenticacao_Estrutura/assets/157809964/9bcd7c40-6997-4d98-8736-f7310839738b" style="width:100%">
+</div>
+
 
 ### Autenticado e com acesso a Manager
 
-<img src="https://cdn.discordapp.com/attachments/1046824853015113789/1202807725533429810/image.png?ex=65ceccfc&is=65bc57fc&hm=97b5158c522e582f6be386852528b653657a794822374e1ece03114f88e07add&" alt="">
+
+<div align="center">
+<img src="https://github.com/lucasmargui/ASP_Autenticacao_Estrutura/assets/157809964/48dd5e40-450e-49db-999c-7fee52b08966" style="width:100%">
+</div>
+
 
 ## Estrutura do Projeto
 
-<img src="https://cdn.discordapp.com/attachments/1046824853015113789/1202806448388833350/image.png?ex=65cecbcc&is=65bc56cc&hm=fd00599f8ba29f1f5d6156221239aa42ee5136242e02eaa7cacb3547f9e2cd6c&" alt="">
+<div align="center">
+	<h3> </h3>
+<img src="" style="width:100%">
+</div>
+
 
 
